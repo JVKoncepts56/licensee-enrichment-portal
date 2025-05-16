@@ -1,0 +1,23 @@
+[theme]
+# Primary accent color for interactive elements
+primaryColor = "#0047AB"  # Cobalt Blue
+
+# Background color for the main content area
+backgroundColor = "#FFFFFF"  # White
+
+# Background color used for the sidebar and most interactive widgets
+secondaryBackgroundColor = "#F0F2F6"  # Light Gray-Blue
+
+# Color used for almost all text
+textColor = "#262730"  # Dark Gray
+
+# Font family for all text in the app, except code blocks
+font = "sans-serif"  # Options: "sans serif", "serif", or specific fonts
+
+[server]
+# Display progress when running the app
+showToolbar = true
+
+[browser]
+# HTML title when the app is loaded
+gatherUsageStats = false

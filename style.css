@@ -1,0 +1,119 @@
+/* Main title styling */
+h1 {
+    color: #0047AB;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 700;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #f0f2f6;
+    margin-bottom: 30px;
+}
+
+/* Subtitle styling */
+h2, h3 {
+    color: #333;
+    font-family: 'Helvetica Neue', sans-serif;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+/* Form fields styling */
+.stTextInput, .stSelectbox, .stDateInput, .stFileUploader {
+    margin-bottom: 15px;
+}
+
+/* Button styling */
+.stButton>button {
+    background-color: #0047AB;
+    color: white;
+    border-radius: 8px;
+    padding: 10px 24px;
+    font-weight: 600;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s;
+}
+
+.stButton>button:hover {
+    background-color: #003380;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Progress bar color */
+.stProgress > div > div > div {
+    background-color: #0047AB;
+}
+
+/* Expander styling */
+.streamlit-expanderHeader {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* Success/Error message styling */
+.stSuccess, .stInfo {
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+/* Table/DataFrame styling */
+.dataframe {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 14px;
+    font-family: sans-serif;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+.dataframe thead th {
+    text-align: left;
+    background-color: #0047AB;
+    color: white;
+    padding: 12px 15px;
+}
+
+.dataframe tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.dataframe tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.dataframe tbody tr:last-of-type {
+    border-bottom: 2px solid #0047AB;
+}
+
+.dataframe tbody td {
+    padding: 12px 15px;
+}
+
+/* Card-like containers */
+.css-card {
+    border-radius: 10px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+/* Tabs styling */
+.stTabs [data-baseweb="tab-list"] {
+    gap: 8px;
+}
+
+.stTabs [data-baseweb="tab"] {
+    height: 50px;
+    white-space: pre-wrap;
+    border-radius: 4px 4px 0 0;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-weight: 600;
+}
+
+.stTabs [aria-selected="true"] {
+    background-color: #0047AB;
+    color: white;
+}

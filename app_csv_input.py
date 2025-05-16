@@ -4,10 +4,47 @@ import uuid
 import openai
 import json
 import time
+import base64
 from supabase import create_client
 
 # Page config
 st.set_page_config(page_title="Licensee Enrichment Portal", layout="wide")
+
+# Load custom CSS
+def load_css():
+    with open("style.css") as f:
+        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+        
+# Apply custom styling
+try:
+    load_css()
+except:
+    st.write("Custom styling not loaded. The app will use default Streamlit styling.")
+    
+# Add logo to header
+def add_logo(logo_path):
+    try:
+        with open(logo_path, "rb") as img_file:
+            encoded_string = base64.b64encode(img_file.read()).decode()
+        st.markdown(
+            f"""
+            <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                <img src="data:image/png;base64,{encoded_string}" style="height: 60px; margin-right: 20px;">
+                <h1 style="margin: 0;">Licensee Enrichment Portal</h1>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+        return True
+    except:
+        return False
+
+# Try to add logo if available
+logo_added = False
+try:
+    logo_added = add_logo("logo.png")
+except:
+    pass
 
 # Function to process a single licensee - can be used for both single and batch processing
 def process_licensee(uid, brand_name, contact_name, email, website, headquarters, 
@@ -272,8 +309,17 @@ product_summary_text: Write one paragraph summarizing the types of products they
         return result
 
 # App title and description
-st.title("Licensee Enrichment Portal")
-st.write("Enter licensee information to enrich and add to the database.")
+if not logo_added:
+    st.title("Licensee Enrichment Portal")
+
+st.markdown("""
+<div class="css-card">
+    <p style="font-size: 16px; color: #555;">
+        Enter licensee information to enrich and add to the database. 
+        This tool automates the process of gathering business intelligence and storing it in your database.
+    </p>
+</div>
+""", unsafe_allow_html=True)
 
 # Configuration - Store these in Streamlit secrets in production
 if "OPENAI_API_KEY" not in st.secrets:
@@ -323,7 +369,11 @@ category_list = ["Accessories", "Sunglasses", "Scarves", "Belts", "Baseball Caps
                  "Kids Slippers", "Men's Flipflops", "Women's Flipflops", "Kids Flipflops", "Kids Rain Boots", "Adult Rain Boots"]
 
 # Create tabs for Single Entry vs Batch Upload
-tab1, tab2, tab3 = st.tabs(["Single Entry", "Batch Upload", "CSV Text Input"])
+st.markdown("""
+<h2 style="margin-top: 40px; margin-bottom: 20px;">Data Entry Methods</h2>
+""", unsafe_allow_html=True)
+
+tab1, tab2, tab3 = st.tabs(["✏️ Single Entry", "📁 Batch Upload", "📋 CSV Text Input"])
 
 with tab1:
     # Form inputs for single entry
@@ -715,30 +765,52 @@ if uploaded_file is not None and batch_submit:
         st.error(f"Error processing batch: {str(e)}")
 
 # Show instructions at the bottom
-with st.expander("How to use this tool"):
-    st.write("""
-    1. Enter the licensee's information:
-       - UUID (required): A unique identifier for this licensee
-       - Brand Name: The name of the brand
-       - Website URL: The brand's website (required)
-       - Other fields as available
-       
-    2. Click 'Process Licensee Data' to start the enrichment process
-    
-    3. The system will:
-       - Generate a unique ID for the licensee
-       - Analyze the company website
-       - Create detailed business profiles and summaries
-       - Generate embeddings for similarity matching
-       - Store all data in your Supabase database
-       
-    4. For batch processing:
-       - Prepare a CSV file with the required columns
-       - Upload the file and click 'Process Batch'
-       - Monitor progress as each record is processed
-       
-    5. For direct CSV input:
-       - Paste your CSV data in the text area
-       - Click 'Process CSV Text'
-       - Monitor progress as each record is processed
-    """)
+st.markdown("<hr style='margin-top: 50px; margin-bottom: 30px;'>", unsafe_allow_html=True)
+
+with st.expander("📚 How to use this tool"):
+    st.markdown("""
+    <div class="css-card">
+        <h3 style="color: #0047AB;">Single Entry Processing</h3>
+        <ol>
+            <li>Enter the licensee's information:
+                <ul>
+                    <li><strong>UUID</strong> (required): A unique identifier for this licensee</li>
+                    <li><strong>Brand Name</strong>: The name of the brand</li>
+                    <li><strong>Website URL</strong>: The brand's website (required)</li>
+                    <li>Other fields as available</li>
+                </ul>
+            </li>
+            <li>Click 'Process Licensee Data' to start the enrichment</li>
+        </ol>
+        
+        <h3 style="color: #0047AB; margin-top: 25px;">Batch Processing</h3>
+        <ol>
+            <li>Prepare a CSV file with the required columns</li>
+            <li>Upload the file and click 'Process Batch'</li>
+            <li>Monitor progress as each record is processed</li>
+        </ol>
+        
+        <h3 style="color: #0047AB; margin-top: 25px;">CSV Text Input</h3>
+        <ol>
+            <li>Paste your CSV data in the text area</li>
+            <li>Click 'Process CSV Text'</li>
+            <li>Monitor progress as each record is processed</li>
+        </ol>
+        
+        <h3 style="color: #0047AB; margin-top: 25px;">How It Works</h3>
+        <p>The system will:</p>
+        <ul>
+            <li>Analyze the company website using AI</li>
+            <li>Create detailed business profiles and summaries</li>
+            <li>Generate embeddings for similarity matching</li>
+            <li>Store all data in your Supabase database</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+
+# Add a footer
+st.markdown("""
+<div style="text-align: center; margin-top: 50px; padding: 20px; color: #666;">
+    <p>© 2025 Licensee Enrichment Portal | Powered by <a href="https://streamlit.io/" target="_blank" style="color: #0047AB; text-decoration: none;">Streamlit</a> and <a href="https://openai.com/" target="_blank" style="color: #0047AB; text-decoration: none;">OpenAI</a></p>
+</div>
+""", unsafe_allow_html=True)
