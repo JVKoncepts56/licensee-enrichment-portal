@@ -1,0 +1,9 @@
+runtime: python39
+
+entrypoint: streamlit run app_clean.py --server.port=$PORT --server.address=0.0.0.0
+
+env_variables:
+  # These will be overridden by your secrets in production
+  OPENAI_API_KEY: ""
+  SUPABASE_URL: ""
+  SUPABASE_KEY: ""
